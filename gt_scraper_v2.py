@@ -39,8 +39,6 @@ def get_data(bucket_start_date,bucket_end_date, keyword):
     tz = "-120"
 
     explore_URL = 'https://trends.google.com/trends/api/explore?hl={0}&tz={1}&req={2}'.format(hl,tz,json.dumps(req).replace(' ','').replace('+',' '))
-    print explore_URL
-    print requests.get(explore_URL).text.encode('utf8')
     return requests.get(explore_URL).text
 
 def get_token(response_text):
@@ -68,7 +66,7 @@ def parse_csv(csv_contents):
     dates = []
     values = []
     # Delete top 3 lines
-    for line in lines[3:]:
+    for line in lines[3:-1]:
         try:
             dates.append(line.split(',')[0].replace(' ',''))
             values.append(line.split(',')[1].replace(' ',''))
@@ -76,7 +74,6 @@ def parse_csv(csv_contents):
             pass
     df['date'] = dates
     df['value'] = values
-    print df.head()
     return df   
 
 def get_daily_frames(start_date, end_date, keyword):
@@ -139,22 +136,10 @@ if __name__ == '__main__':
     start_date = sys.argv[1]
     end_date = sys.argv[2]
     geo = ''
-    category = ''
+    category = 22
     keywords = '+'.join(sys.argv[3:])
 
     daily_frames = get_daily_frames(start_date, end_date, keywords)
     weekly_frame = get_weekly_frame(start_date, end_date, keywords)
 
     stitch_frames(daily_frames, weekly_frame)
-
-# start_date = '2016-01-01'
-# end_date = '2017-02-18'
-# geo = ''
-# category = ''
-# keywords = '+'.join(['donald','trump'])
-
-# daily_frames = get_daily_frames(start_date, end_date, keywords)
-# weekly_frame = get_weekly_frame(start_date, end_date, keywords)
-
-# stitch_frames(daily_frames, weekly_frame)
-
