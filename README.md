@@ -16,3 +16,7 @@ python gt_scraper_v2.py 2016-01-01 2017-02-18 donald trump
 
 - Python 2.7
 - pandas
+
+## Note
+
+Please do not use for any purposes that will violate Google's [terms of use](https://www.google.com/policies/terms/). 
