@@ -122,7 +122,7 @@ def stitch_frames(daily_frames, weekly_frame):
                 final_data[this_date] = this_val
             except:
                 pass
-    final_data_frame = DataFrame.from_dict(final_data,orient='index').sort()
+    final_data_frame = DataFrame.from_dict(final_data,orient='index').sort_index()
     final_data_frame[0] = np.round(final_data_frame[0]/final_data_frame[0].max()*100,2)
 
     final_data_frame.columns=['Volume']
